@@ -2,33 +2,27 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
-const schema = new Schema ({
-    //schema medical record
-    medicalDiagnostic: {
+const squema = new Schema ({
+    //schema criris record
+    crisisDay: {
         required: true,
         type: String,
         trim: true,
         minlength: 1
     },
-    diagnosisYears: {
-        required: true,
-        type: Number,
-        trim: true,
-        minlength: 1
-    },
-    medicine: {
+    timeCrisis: {
         required: true,
         type: String,
         trim: true,
         minlength: 1
     },
-    medicamentationDose: {
+    durationCrisis: {
         required: true,
-        type: Number,
+        type: String,
         trim: true,
         minlength: 1
     },
-    medicationHours: {
+    typeCrisis: {
         required: true,
         type: String,
         trim: true,
@@ -37,6 +31,6 @@ const schema = new Schema ({
 })
 
 module.exports = {
-    model: mongoose.model('Medicalrecord', schema),
-    schema
+    model: mongoose.model('Crisisrecord', squema),
+    squema
 }

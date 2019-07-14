@@ -7,6 +7,8 @@ const pacientsRoutes = require('./routes/pacients')
 const personalInformationRoutes = require('./routes/personalInformation')
 const emergencycontactsRoutes = require('./routes/emergencycontacts')
 const medicalrecordRoutes = require('./routes/medicalrecord')
+const medicalscheduleRoutes = require('./routes/medicalschedule')
+const crisisrecordRoutes = require('./routes/crisisrecord')
 
 //middleware 
 app.use(cors())
@@ -16,6 +18,9 @@ app.use('/pacients', pacientsRoutes)
 app.use('/personalInformation', personalInformationRoutes)
 app.use('/emergencycontacts', emergencycontactsRoutes)
 app.use('/medicalrecord', medicalrecordRoutes)
+app.use('/medicalschedule', medicalscheduleRoutes)
+app.use('/crisisrecord', crisisrecordRoutes)
+
 
 app.get('/', (req, res) => {
     res.json({

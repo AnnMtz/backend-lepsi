@@ -1,39 +1,40 @@
 const express = require('express')
 const app = express()
 const router = express.Router()
-const medicalrecord = require('../usecases/medicalrecord')
+const medicalschedule = require('../usecases/medicalschedule')
 
 router.get('/', async(req, res) => {
-    const medicalrecords = await medicalrecord.get()
+    const medicalschedules = await medicalschedule.get()
 
     res.json({
         success: true,
         message: 'DONE',
         payload: {
-            medicalrecords
+            medicalschedules
         }
     })
 })
 
 router.post('/', async(req, res) => {
     try{
-        const medicalrecordData = req.body
-        console.log(medicalrecordData);
+        const medicalscheduleData = req.body
+        console.log(medicalscheduleData);
 
-        const newMedicalrecord = await medicalrecord.create(medicalrecordData)
+        const newMedicalschedule = await medicalschedule.create(medicalscheduleData)
 
         res.json({
             success: true,
-            message: 'New medical record created',
+            message: 'New medical appointment created',
             payload: {
-                medicalrecord: newMedicalrecord
+                medicalschedule: newMedicalschedule
             }
         })
+        
     } catch(error) {
         res.status(400),
         res.json({
             success: false,
-            message: 'Medical record couldn´t be created',
+            message: 'Medical appointment couldn´t be created',
             error: [
                 error
             ]
