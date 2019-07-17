@@ -27,6 +27,12 @@ const schema = new Schema ({
         type: String,
         trim: true,
         minlength: 1
+    },
+    celPhonePacient: {
+        required: true,
+        type: String,
+        trim: true,
+        minlength: 1
     }
 })
 

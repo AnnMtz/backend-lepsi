@@ -19,7 +19,21 @@ async function create(personalinformationData) {
     return pesonalinformationCreate
 }
 
-module.exports = {
+async function getById(personalinformationId) {
+    const personalinformation = await PersonalInformation(personalinformationId).lean();
+    if(!personalinformation) throw new Error('Personal information not found');
+    const { cleanPersonalinformation } = personalinformation;
+    return cleanPersonalinformation;
+}
+
+const deleteById = (personalinformationId) => PersonalInformation.findByIdAndDelete(personalinformationId)
+
+const updateById = (personalinformationId, personalinformationData) => PersonalInformation.findByIdAndUpdate(personalinformationId, personalinformationData)
+
+module.exports ={
     get,
-    create
+    create,
+    getById,
+    deleteById,
+    updateById
 }

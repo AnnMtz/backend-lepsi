@@ -42,4 +42,51 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const foundPacient = await pacient.getById(id)
+      res.json({
+        success: true,
+        message: 'pacient information found',
+        payload: {
+          pacient: foundPacient
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'pacient information not found',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
+  router.patch('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const newPacientData = req.body
+      const updatedPacient = await pacient.updateById(id, newPacientData)
+      res.json({
+        success: true,
+        message: 'Pacient information updated',
+        payload: {
+          pacient: updatedPacient
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot update pacient information',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
 module.exports = router

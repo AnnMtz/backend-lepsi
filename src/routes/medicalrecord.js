@@ -41,4 +41,75 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const foundMedicalrecord = await medicalrecord.getById(id)
+      res.json({
+        success: true,
+        message: 'medical record found',
+        payload: {
+          medicalrecord: foundMedicalrecord
+        }
+      })
+    } catch (error) {
+      console.error('Error: ', error)
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'medical record not found',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
+  router.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const deletedMedicalrecord = await medicalrecord.deleteById(id)
+      res.json({
+        success: true,
+        message: 'Medical record deleted',
+        payload: {
+          medicalrecord: deletedMedicalrecord
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot delete medical record',
+        error: [
+          error
+        ]
+      })
+    }
+  })
+
+  router.patch('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const newMedicalrecordData = req.body
+      const updatedMedicalrecord = await medicalrecord.updateById(id, newMedicalrecordData)
+      res.json({
+        success: true,
+        message: 'Medical record updated',
+        payload: {
+          medicalrecord: updatedMedicalrecord
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot update medical record',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
 module.exports = router

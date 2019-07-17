@@ -19,7 +19,18 @@ async function create(crisisrecordData) {
     
 }
 
+async function getById(crisisrecordId) {
+    const crisisrecord = await Crisisrecord(crisisrecordId).lean();
+    if(!crisisrecord) throw new Error('Crisis record not found')
+    const { cleanCrisisrecord } = crisisrecord
+    return cleanCrisisrecord
+}
+
+const deleteById = (crisisrecordId) => Crisisrecord.findByIdAndDelete(crisisrecordId)
+
 module.exports = {
     get,
-    create
+    create,
+    getById,
+    deleteById
 }

@@ -19,7 +19,21 @@ async function create(emergencycontactsData) {
     return emergencycontactsCreate
 }
 
+async function getById(emergencycontactsId) {
+    const emergencycontacts = await Emergencycontacts(emergencycontactsId).lean();
+    if(!emergencycontacts) throw new Error('Emergency contact not found')
+    const { cleanEmergencycontacts } = emergencycontacts
+    return cleanEmergencycontacts
+}
+
+const deleteById = (emergencycontactsId) => Emergencycontacts.findByIdAndDelete(emergencycontactsId)
+
+const updateById = (emergencycontactsId, emergencycontactsData) => Emergencycontacts.findByIdAndUpdate(emergencycontactsId, emergencycontactsData)
+
 module.exports = {
     get,
-    create
+    create,
+    getById,
+    deleteById,
+    updateById
 }

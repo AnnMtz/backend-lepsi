@@ -43,4 +43,74 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const foundPersonalinformation = await personalinformation.getById(id)
+      res.json({
+        success: true,
+        message: 'personal information found',
+        payload: {
+          personalinformation: foundPersonalinformation
+        }
+      })
+    } catch (error) {
+      console.error('Error: ', error)
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'personal information not found',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
+  router.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const deletedPersonalInformation = await personalinformation.deleteById(id)
+      res.json({
+        success: true,
+        message: 'Personal information deleted',
+        payload: {
+          personalinformation: deletedPersonalInformation
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot delete personal information',
+        error: [
+          error
+        ]
+      })
+    }
+  })
+
+  router.patch('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const newPersonalinformationData = req.body
+      const updatedPersonalinformation = await personalinformation.updateById(id, newPersonalinformationData)
+      res.json({
+        success: true,
+        message: 'Personal information updated',
+        payload: {
+          personalinformation: updatedPersonalinformation
+        }
+      })
+    } catch (error) {
+      console.error('Error: ', error)
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot update personal information',
+        error: error.message
+      })
+    }
+  })
+
 module.exports = router

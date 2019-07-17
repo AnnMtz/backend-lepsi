@@ -43,4 +43,76 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const foundEmergencycontact = await emergencycontacts.getById(id)
+      res.json({
+        success: true,
+        message: 'emergency contact found',
+        payload: {
+          emergencycontacts: foundEmergencycontact
+        }
+      })
+    } catch (error) {
+    //   console.error('Error: ', error)
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'emergency contact not found',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
+  router.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const deleteEmergencycontact = await emergencycontacts.deleteById(id)
+      res.json({
+        success: true,
+        message: 'Emergency contact deleted',
+        payload: {
+          emergencycontacts: deleteEmergencycontact
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot delete emergency contact',
+        error: [
+          error
+        ]
+      })
+    }
+  })
+
+  router.patch('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const newEmergencycontactsData = req.body
+      const updatedEmergencycontact = await emergencycontacts.updateById(id, newEmergencycontactsData)
+      res.json({
+        success: true,
+        message: 'Emergency contact updated',
+        payload: {
+          emergencycontacts: updatedEmergencycontact
+        }
+      })
+    } catch (error) {
+    //   console.error('Error: ', error)
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot update emergency contact',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
 module.exports = router

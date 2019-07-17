@@ -19,7 +19,21 @@ async function create(medicalscheduleData) {
     
 }
 
+async function getById(medicalscheduleId) {
+    const medicalschedule = await Medicalschedule(medicalsheduleId).lean();
+    if(!medicalschedule) throw new Error('Medical shedule not found')
+    const { cleanMedicalschedule } = medicalschedule
+    return cleanMedicalschedule
+}
+
+const deleteById = (medicalscheduleId) => Medicalschedule.findByIdAndDelete(medicalscheduleId)
+
+const updateById = (medicalscheduleId, medicalscheduleData) => Medicalschedule.findByIdAndUpdate(medicalscheduleId, medicalscheduleData)
+
 module.exports = {
     get,
-    create
+    create,
+    getById,
+    deleteById,
+    updateById
 }

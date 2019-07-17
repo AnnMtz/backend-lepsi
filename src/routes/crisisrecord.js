@@ -42,4 +42,50 @@ router.post('/', async(req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const foundCrisisrecord = await crisisrecord.getById(id)
+      res.json({
+        success: true,
+        message: 'crisis record found',
+        payload: {
+          crisisrecord: foundCrisisrecord
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'crisis record not found',
+        error: [
+            error
+        ]
+      })
+    }
+  })
+
+  router.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params
+      const deleteCrisisrecord = await crisisrecord.deleteById(id)
+      res.json({
+        success: true,
+        message: 'Crisis record deleted',
+        payload: {
+          crisisrecord: deleteCrisisrecord
+        }
+      })
+    } catch (error) {
+      res.status(404)
+      res.json({
+        success: false,
+        message: 'Cannot delete crisis record',
+        error: [
+          error
+        ]
+      })
+    }
+  })
+
 module.exports = router

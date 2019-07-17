@@ -16,10 +16,23 @@ async function create(medicalrecordData) {
     const medicalrecord = new Medicalrecord(medicalrecordData)
     const medicalrecordCreate = await medicalrecord.save()
     return medicalrecordCreate
-    
 }
+
+async function getById(medicalrecordId) {
+    const medicalrecord = await Medicalrecord(medicalrecordId).lean();
+    if(!medicalrecord) throw new Error('Medical record not found')
+    const { cleanMedicalrecord } = medicalrecord
+    return cleanMedicalrecord
+}
+
+const deleteById = (medicalrecordId) => Medicalrecord.findByIdAndDelete(medicalrecordId)
+
+const updateById = (medicalrecordId, medicalrecordData) => Medicalrecord.findByIdAndUpdate(medicalrecordId, medicalrecordData)
 
 module.exports = {
     get,
-    create
+    create,
+    getById,
+    deleteById,
+    updateById
 }

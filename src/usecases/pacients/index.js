@@ -18,7 +18,18 @@ async function create(pacientData) {
     return pacientCreate
 }
 
+async function getById(pacientId) {
+    const pacient = await Pacient(pacientId).lean();
+    if(!pacient) throw new Error('Pacient information not found')
+    const { cleanPacient } = pacient
+    return cleanPacient
+}
+
+const updateById = (pacientId, pacientData) => Pacient.findByIdAndUpdate(pacientId, pacientData)
+
 module.exports = {
     get,
-    create
+    create,
+    getById,
+    updateById
 }

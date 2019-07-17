@@ -1,0 +1,9 @@
+applications:
+- path: .
+  name: lepsi-api
+  random-route: true
+  memory: 256M
+  instances: 1
+  
+
+ 
